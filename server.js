@@ -5,15 +5,12 @@ require("dotenv").config();
 
 const app = express();
 
-/* ===== CORS CONFIG (MUST BE FIRST) ===== */
+/* ===== CORS: ALLOW ALL ORIGINS & ALL PATHS ===== */
 app.use(cors({
-  origin: [
-    "http://localhost:5173",
-    "https://student-task-manager-snowy.vercel.app/"
-  ],
+  origin: true, // 🔥 allow all origins dynamically
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
   allowedHeaders: ["Content-Type", "Authorization"],
-  credentials: true
+  credentials: true // safe with origin:true
 }));
 
 /* ===== BODY PARSER ===== */
