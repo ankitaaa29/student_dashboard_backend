@@ -9,15 +9,12 @@ const app = express();
 app.use(cors({
   origin: [
     "http://localhost:5173",
-    "https://student-task-manager-snowy.vercel.app"
+    "https://student-task-manager-snowy.vercel.app/"
   ],
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
   allowedHeaders: ["Content-Type", "Authorization"],
   credentials: true
 }));
-
-// ✅ Handle preflight requests
-app.options("*", cors());
 
 /* ===== BODY PARSER ===== */
 app.use(express.json());
