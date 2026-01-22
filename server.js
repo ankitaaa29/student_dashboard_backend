@@ -1,17 +1,21 @@
 const express = require("express");
 const mongoose = require("mongoose");
-const cors = require("cors");
 require("dotenv").config();
 
 const app = express();
 
-/* ===== CORS: ALLOW ALL ORIGINS & ALL PATHS ===== */
-app.use(cors({
-  origin: true, // 🔥 allow all origins dynamically
-  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-  allowedHeaders: ["Content-Type", "Authorization"],
-  credentials: true // safe with origin:true
-}));
+/* ===== FORCE CORS (FIXES PREFLIGHT 100%) ===== */
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Methods", "GET,POST,PUT,DELETE,OPTIONS");
+  res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
+
+  if (req.method === "OPTIONS") {
+    return res.sendStatus(200);
+  }
+
+  next();
+});
 
 /* ===== BODY PARSER ===== */
 app.use(express.json());
