@@ -5,41 +5,32 @@ require("dotenv").config();
 
 const app = express();
 
-// ===== CORS CONFIG (VERY IMPORTANT) =====
-app.use(
- cors({
-    origin: [
-     "http://localhost:5173", // local frontend
-     "https://student-task-manager-snowy.vercel.app" // vercel frontend
-    ],
-    methods: ["GET", "POST", "PUT", "DELETE"],
-    credentials: true
-  })
-);
+// CORS (important for Vercel)
+app.use(cors({
+  origin: "*",
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  allowedHeaders: ["Content-Type", "Authorization"]
+}));
 
-// Body parser
 app.use(express.json());
 
-// ===== ROUTES =====
-app.use("/api/schedule", require("./routes/schedule"));
-app.use("/api/admin", require("./routes/admin"));
+// Routes
 app.use("/api/auth", require("./routes/auth"));
 app.use("/api/tasks", require("./routes/tasks"));
 app.use("/api/notes", require("./routes/notes"));
 app.use("/api/goals", require("./routes/goals"));
+app.use("/api/schedule", require("./routes/schedule"));
+app.use("/api/admin", require("./routes/admin"));
 
-// Test route
 app.get("/", (req, res) => {
-  res.send("Backend is running successfully 🚀");
+  res.send("Backend is running 🚀");
 });
 
-// ===== DATABASE =====
-mongoose
-  .connect(process.env.MONGO_URI)
+// MongoDB
+mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log("MongoDB Connected"))
-  .catch((err) => console.log("Mongo Error:", err));
+  .catch(err => console.log("Mongo Error:", err));
 
-// ===== START SERVER =====
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log("Server running on port", PORT);
