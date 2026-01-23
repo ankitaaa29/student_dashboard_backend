@@ -5,11 +5,11 @@ require("dotenv").config();
 
 const app = express();
 
-// CORS (important for Vercel)
+// CORS configuration (important for Vercel frontend)
 app.use(cors({
-  origin: "*",
+  origin: "*", // allow all origins (for now)
   methods: ["GET", "POST", "PUT", "DELETE"],
-  allowedHeaders: ["Content-Type", "Authorization"]
+  allowedHeaders: ["Content-Type", "Authorization", "x-auth-token"]
 }));
 
 app.use(express.json());
@@ -26,7 +26,7 @@ app.get("/", (req, res) => {
   res.send("Backend is running 🚀");
 });
 
-// MongoDB
+// MongoDB connection
 mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log("MongoDB Connected"))
   .catch(err => console.log("Mongo Error:", err));
