@@ -1,21 +1,21 @@
 const express = require("express");
 const mongoose = require("mongoose");
-//const cors = require("cors");
+const cors = require("cors");
 require("dotenv").config();
 
 const app = express();
 
 // ===== CORS CONFIG (VERY IMPORTANT) =====
-//app.use(
- // cors({
-   // origin: [
-    //  "http://localhost:5173", // local frontend
-    //  "https://student-task-manager-snowy.vercel.app" // vercel frontend
-   // ],
-   // methods: ["GET", "POST", "PUT", "DELETE"],
-   // credentials: true
- // })
-//);
+app.use(
+ cors({
+    origin: [
+     "http://localhost:5173", // local frontend
+     "https://student-task-manager-snowy.vercel.app" // vercel frontend
+    ],
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    credentials: true
+  })
+);
 
 // Body parser
 app.use(express.json());
